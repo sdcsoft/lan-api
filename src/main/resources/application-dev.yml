@@ -1,0 +1,12 @@
+spring:
+  datasource:
+    datacore:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/sdcsoft_core_db?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&&useSSL=false
+      username: root
+      password: 123456
+    other:
+      driver-class-name: com.mysql.cj.jdbc.Driver
+      url: jdbc:mysql://127.0.0.1:3306/sdcsoft_core_db?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&&useSSL=false
+      username: root
+      password: 123456
