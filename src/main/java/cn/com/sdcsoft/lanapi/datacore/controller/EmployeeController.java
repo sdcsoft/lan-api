@@ -246,4 +246,22 @@ public class EmployeeController {
             return Result.getFailResult(ex.getMessage());
         }
     }
+
+    /**
+     * 将用户变更为普通微信用户
+     * 说明：提供锅炉厂、代理商、终端用户进行员工删除的后续操作
+     *
+     * @param loginId
+     * @return
+     */
+    @PostMapping(value = "/free")
+    public Result freeEmployee(String loginId) {
+        try {
+            mapper.freeEmployee(loginId);
+            return Result.getSuccessResult();
+        } catch (Exception ex) {
+            return Result.getFailResult(ex.getMessage());
+        }
+    }
+
 }

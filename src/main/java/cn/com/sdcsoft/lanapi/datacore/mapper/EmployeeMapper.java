@@ -56,6 +56,9 @@ public interface EmployeeMapper {
     @Update("update Employee set Status=#{status} where Mobile=#{loginId} or Email=#{loginId}")
     void changeEmployeeStatus(@Param("loginId") String loginId, @Param("status") int status);
 
+    @Update("update Employee set OrgType=5,OrgId=0 where Mobile=#{loginId} or Email=#{loginId}")
+    void freeEmployee(@Param("loginId") String loginId);
+
     @Insert("insert into Employee (OrgType,OrgId,Password,Mobile,Email,QQ,RealName,Status,LastLoginDatetime,Mark) values (#{orgType},#{orgId},#{password},#{mobile},#{email},#{qQ},#{realName},#{status},#{lastLoginDatetime},#{mark})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void addEmployee(Employee Employee);
