@@ -17,6 +17,24 @@ public class Employee implements Serializable {
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date lastLoginDatetime;
 
+    public int getOrgStatus() {
+        return orgStatus;
+    }
+
+    public void setOrgStatus(int orgStatus) {
+        this.orgStatus = orgStatus;
+    }
+
+    private  int orgStatus;
+    public String getOrgName() {
+        return orgName;
+    }
+
+    public void setOrgName(String orgName) {
+        this.orgName = orgName;
+    }
+
+    private String orgName;
     public int getId() {
         return id;
     }

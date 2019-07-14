@@ -1,9 +1,9 @@
 package cn.com.sdcsoft.lanapi.datacore.controller;
 
-import  cn.com.sdcsoft.lanapi.datacore.entity.db.Device;
-import  cn.com.sdcsoft.lanapi.datacore.entity.web.Result;
-import  cn.com.sdcsoft.lanapi.datacore.mapper.DeviceMapper;
-import  cn.com.sdcsoft.lanapi.datacore.mapper.DeviceTypeMapper;
+import cn.com.sdcsoft.lanapi.datacore.entity.db.Device;
+import cn.com.sdcsoft.lanapi.datacore.entity.web.Result;
+import cn.com.sdcsoft.lanapi.datacore.mapper.DeviceMapper;
+import cn.com.sdcsoft.lanapi.datacore.mapper.DeviceTypeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
 import org.springframework.web.bind.annotation.*;
 
@@ -20,6 +20,7 @@ public class DeviceController {
 
     /**
      * 获取控制器列表
+     *
      * @return
      */
     @GetMapping(value = "/list")
@@ -33,6 +34,7 @@ public class DeviceController {
 
     /**
      * 查找企业的类型列表
+     *
      * @param enterpriseId
      * @return
      */
@@ -47,6 +49,7 @@ public class DeviceController {
 
     /**
      * 查找锅炉厂的设备列表
+     *
      * @param customerId
      * @return
      */
@@ -62,6 +65,7 @@ public class DeviceController {
     /**
      * 根据deviceNo获取可用设备，设备状态非可用时，deviceNo有效也无法拿到数据
      * 专为手机APP/微信小程序提供的添加设备用的查询接口
+     *
      * @param deviceNo 加密或非加密的设备编号
      * @return
      */
@@ -77,6 +81,7 @@ public class DeviceController {
     /**
      * 根据suffix获取可用设备，设备状态非可用时，suffix有效也无法拿到数据
      * 专为手机APP/微信小程序提供的添加设备用的查询接口
+     *
      * @param suffix 未加密的设备编号
      * @return
      */
@@ -93,6 +98,7 @@ public class DeviceController {
     /**
      * 根据suffix获取设备信息，设备状态非可用也可获取到数据
      * 专为微信小程序提供的企业内部员工查询设备的接口
+     *
      * @param suffix
      * @return
      */
@@ -108,8 +114,9 @@ public class DeviceController {
     /**
      * 根据suffix修改设备信息
      * 专为微信小程序提供的企业内部员工修改设备的接口
+     *
      * @param suffix
-     * @param prefix 设备类型 1为控制器 2为PLC
+     * @param prefix     设备类型 1为控制器 2为PLC
      * @param deviceType 设备类型信息
      * @param saleStatus 销售状态 0 未销售 1 已销售
      * @return
@@ -126,7 +133,8 @@ public class DeviceController {
 
     /**
      * 批量创建设备
-     * @param deviceList  要创建的设备列表
+     *
+     * @param deviceList 要创建的设备列表
      * @return
      */
     @PostMapping("/create")
@@ -139,10 +147,75 @@ public class DeviceController {
         }
     }
 
+    @PostMapping(value = "/modify/customerid")
+    public Result modifyCustomerId(String suffix, Integer customerId) {
+        Device device = mapper.findBySuffix(suffix);
+        if (null == customerId) { //删除操作
+            if (null == device) {
+                return Result.getSuccessResult();
+            }
+            mapper.clearCustomerId(suffix, null);
+            return Result.getSuccessResult();
+        }
+
+        if (null == device) {
+            return Result.getFailResult("当前控制器编号无效或尚未启用，请联系经销商处理！");
+        }
+        Integer id = device.getCustomerId();
+        if (null == id || 0 == id) {
+            mapper.modifyCustomerId(suffix, customerId);
+            return Result.getSuccessResult();
+        }
+        return Result.getFailResult("当前控制器编号已被别人使用，请联系经销商处理！");
+    }
+
+    @PostMapping(value = "/modify/agnetid")
+    public Result modifyAgentId(String suffix, Integer agentId) {
+        Device device = mapper.findBySuffix(suffix);
+        if (null == agentId) { //删除操作
+            if (null == device) {
+                return Result.getSuccessResult();
+            }
+            mapper.modifyAgentId(suffix, null);
+            return Result.getSuccessResult();
+        }
+        if (null == device) {
+            return Result.getFailResult("当前控制器编号无效或尚未启用，请联系经销商处理！");
+        }
+        Integer id = device.getAgentId();
+        if (null == id || 0 == id) {
+            mapper.modifyAgentId(suffix, agentId);
+            return Result.getSuccessResult();
+        }
+        return Result.getFailResult("当前控制器编号已被别人使用，请联系经销商处理！");
+    }
+
+    @PostMapping(value = "/modify/enduserid")
+    public Result modifyEndUserId(String suffix, Integer endUserId) {
+        Device device = mapper.findBySuffix(suffix);
+        if (null == endUserId) { //删除操作
+            if (null == device) {
+                return Result.getSuccessResult();
+            }
+            mapper.modifyEndUserId(suffix, null);
+            return Result.getSuccessResult();
+        }
+        if (null == device) {
+            return Result.getFailResult("当前控制器编号无效或尚未启用，请联系经销商处理！");
+        }
+        Integer id = device.getEndUserId();
+        if (null == id || 0 == id) {
+            mapper.modifyCustomerId(suffix, endUserId);
+            return Result.getSuccessResult();
+        }
+        return Result.getFailResult("当前编号已被使用，请联系经销商处理！");
+    }
+
     /**
      * 根据suffix修改设备类型信息
+     *
      * @param deviceType 设备类型信息
-     * @param subType 具体类型信息
+     * @param subType    具体类型信息
      * @return
      */
     @PostMapping(value = "/modify/type")
@@ -160,6 +233,7 @@ public class DeviceController {
 
     /**
      * 获取设备类型列表
+     *
      * @return
      */
     @GetMapping(value = "/type/list")
@@ -173,6 +247,7 @@ public class DeviceController {
 
     /**
      * 创建设备类型
+     *
      * @param typeName
      * @return
      */
@@ -191,6 +266,7 @@ public class DeviceController {
 
     /**
      * 修改设备类型
+     *
      * @param id
      * @param typeName
      * @return
@@ -204,25 +280,6 @@ public class DeviceController {
             return Result.getFailResult(ex.getMessage());
         }
     }
-
-
-
-
-//    @GetMapping(value = "/sell")
-//    public List<Device> getSell() {
-//        return mapper.findAllByStatus(Device.STATUS_SELL);
-//    }
-//
-//    @GetMapping(value = "/ctl")
-//    public List<Device> getCTL() {
-//        return mapper.findAllCTLByStatus(Device.STATUS_SELL);
-//    }
-//
-//
-//    @GetMapping(value = "/plc")
-//    public List<Device> getPLC() {
-//        return mapper.findAllPLCByStatus(Device.STATUS_SELL);
-//    }
 
 
 }

@@ -1,5 +1,6 @@
 package cn.com.sdcsoft.lanapi.datacore.controller;
 
+import cn.com.sdcsoft.lanapi.datacore.entity.db.Customer;
 import  cn.com.sdcsoft.lanapi.datacore.entity.web.Result;
 import  cn.com.sdcsoft.lanapi.datacore.mapper.CustomerMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -29,6 +30,18 @@ public class CustomerController {
     public Result getAll() {
         try {
             return Result.getSuccessResult(mapper.findAll());
+        } catch (Exception ex) {
+            return Result.getFailResult(ex.getMessage());
+        }
+    }
+    @GetMapping(value = "/find")
+    public Result getCustomerById(int id) {
+        try {
+            Customer customer = mapper.findOneById(id);
+            if(null == customer){
+                return Result.getFailResult("不存在该组织！");
+            }
+            return Result.getSuccessResult(customer);
         } catch (Exception ex) {
             return Result.getFailResult(ex.getMessage());
         }

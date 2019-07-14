@@ -23,7 +23,7 @@ public class CompanyController {
      * @return
      */
     @GetMapping(value = "/list")
-    public Result getAllCompany() {
+    public Result getAll() {
         try {
             return Result.getSuccessResult(mapper.findAll());
         } catch (Exception ex) {

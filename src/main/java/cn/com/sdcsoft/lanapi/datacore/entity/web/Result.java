@@ -1,5 +1,6 @@
 package cn.com.sdcsoft.lanapi.datacore.entity.web;
 
+
 import java.io.Serializable;
 
 /**
@@ -72,4 +73,6 @@ public class Result<T> implements Serializable
     public T getData(){
         return data;
     }
+
+
 }

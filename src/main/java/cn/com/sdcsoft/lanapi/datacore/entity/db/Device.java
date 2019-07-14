@@ -14,23 +14,23 @@ public class Device implements Serializable {
 
     private int id;
     private int enterpriseId;
-    private int customerId;
-    private int agentId;
-    private int endUserId;
+    private Integer customerId;
+    private Integer agentId;
+    private Integer endUserId;
 
-    public int getAgentId() {
+    public Integer getAgentId() {
         return agentId;
     }
 
-    public void setAgentId(int agentId) {
+    public void setAgentId(Integer agentId) {
         this.agentId = agentId;
     }
 
-    public int getEndUserId() {
+    public Integer getEndUserId() {
         return endUserId;
     }
 
-    public void setEndUserId(int endUserId) {
+    public void setEndUserId(Integer endUserId) {
         this.endUserId = endUserId;
     }
 
@@ -68,7 +68,15 @@ public class Device implements Serializable {
      * 设备类型 如：CTL_NJZJ_IPK2 PLC_BKSE_DRY
      */
     private String deviceType;
+    public String getSubType() {
+        return subType;
+    }
 
+    public void setSubType(String subType) {
+        this.subType = subType;
+    }
+
+    private String subType;
     public String getDevicePrefix() {
         return devicePrefix;
     }
@@ -108,15 +116,15 @@ public class Device implements Serializable {
         return enterpriseId;
     }
 
-    public void setEnterpriseId(int enterpriseId) {
+    public void setEnterpriseId(Integer enterpriseId) {
         this.enterpriseId = enterpriseId;
     }
 
-    public int getCustomerId() {
+    public Integer getCustomerId() {
         return customerId;
     }
 
-    public void setCustomerId(int customerId) {
+    public void setCustomerId(Integer customerId) {
         this.customerId = customerId;
     }
 

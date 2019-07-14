@@ -45,6 +45,19 @@ public interface DeviceMapper {
     @Update("update Device set DeviceType=#{deviceType},SubType=#{subType} where DeviceSuffix=#{deviceSuffix}")
     void modifyDeviceType(@Param("deviceSuffix") String deviceSuffix, @Param("deviceType") String deviceType, @Param("subType") String subType);
 
+    @Update("update Device set CustomerId=#{customerId} where DeviceSuffix=#{deviceSuffix} and ISNULL(CustomerId)")
+    void modifyCustomerId(@Param("deviceSuffix") String deviceSuffix, @Param("customerId") Integer customerId);
+
+    @Update("update Device set CustomerId=#{customerId} where DeviceSuffix=#{deviceSuffix}")
+    void clearCustomerId(@Param("deviceSuffix") String deviceSuffix, @Param("customerId") Integer customerId);
+
+
+    @Update("update Device set AgentId=#{agentId} where DeviceSuffix=#{deviceSuffix} and ISNULL(AgentId)")
+    void modifyAgentId(@Param("deviceSuffix") String deviceSuffix, @Param("agentId") Integer agentId);
+
+    @Update("update Device set EndUserId=#{endUserId} where DeviceSuffix=#{deviceSuffix} and ISNULL(EndUserId)")
+    void modifyEndUserId(@Param("deviceSuffix") String deviceSuffix, @Param("EndUserId") Integer endUserId);
+
     @Select("select * from Device where DeviceSuffix=#{deviceSuffix}")
     @ResultType(Device.class)
     Device findBySuffixForEnterpriseUser(@Param("deviceSuffix") String deviceSuffix);

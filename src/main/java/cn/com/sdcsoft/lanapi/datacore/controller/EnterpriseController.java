@@ -8,10 +8,7 @@ import  cn.com.sdcsoft.lanapi.datacore.mapper.EnterpriseCustomerCodeMapper;
 import  cn.com.sdcsoft.lanapi.datacore.mapper.EnterpriseCustomerMapper;
 import  cn.com.sdcsoft.lanapi.datacore.mapper.EnterpriseMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 import java.util.List;
 
@@ -45,14 +42,14 @@ public class EnterpriseController {
         }
     }
 
-//    @PostMapping(value = "/status")
-//    public Result getEnterprisesByStatus(@RequestParam(name = "status", defaultValue = "-1") int status) {
-//        try {
-//            return Result.getSuccessResult(mapper.findEnterprisesByStatus(status));
-//        } catch (Exception ex) {
-//            return Result.getFailResult(ex.getMessage());
-//        }
-//    }
+    @GetMapping(value = "/find")
+    public Result getEnterprisesById(int id) {
+        try {
+            return Result.getSuccessResult(mapper.findOneById(id));
+        } catch (Exception ex) {
+            return Result.getFailResult(ex.getMessage());
+        }
+    }
 
     /**
      * 创建企业

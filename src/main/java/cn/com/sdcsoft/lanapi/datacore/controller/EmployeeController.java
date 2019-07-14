@@ -1,13 +1,10 @@
 package cn.com.sdcsoft.lanapi.datacore.controller;
 
-import  cn.com.sdcsoft.lanapi.datacore.entity.db.Employee;
-import  cn.com.sdcsoft.lanapi.datacore.entity.web.Result;
-import  cn.com.sdcsoft.lanapi.datacore.mapper.EmployeeMapper;
+import cn.com.sdcsoft.lanapi.datacore.entity.db.Employee;
+import cn.com.sdcsoft.lanapi.datacore.entity.web.Result;
+import cn.com.sdcsoft.lanapi.datacore.mapper.EmployeeMapper;
 import org.springframework.beans.factory.annotation.Autowired;
-import org.springframework.web.bind.annotation.GetMapping;
-import org.springframework.web.bind.annotation.PostMapping;
-import org.springframework.web.bind.annotation.RequestMapping;
-import org.springframework.web.bind.annotation.RestController;
+import org.springframework.web.bind.annotation.*;
 
 /**
  * 注册用户管理接口
@@ -21,6 +18,7 @@ public class EmployeeController {
 
     /**
      * 获取注册用户列表
+     *
      * @return
      */
     @GetMapping(value = "/list")
@@ -34,11 +32,12 @@ public class EmployeeController {
 
     /**
      * 创建用户
+     *
      * @param employee
      * @return
      */
     @PostMapping(value = "/create")
-    public Result create(Employee employee) {
+    public Result create(@RequestBody Employee employee) {
         try {
             Employee checkEmployee = mapper.findOneByLoginId(employee.getMobile());
             if (null != checkEmployee) {
@@ -46,27 +45,97 @@ public class EmployeeController {
             } else {
                 employee.setStatus(Employee.STATUS_ENABLE);
                 mapper.addEmployee(employee);
-                return Result.getSuccessResult();
+                return Result.getSuccessResult(employee);
             }
         } catch (Exception ex) {
             return Result.getFailResult(ex.getMessage());
         }
     }
 
-//    @PostMapping(value = "/search")
-//    public List<Employee> search(@RequestParam(name = "orgType") int orgType, @RequestParam(name = "orgId") int orgId) {
-//        return mapper.findEmployeesByOrg(orgType, orgId);
-//    }
 
     /**
      * 根据注册手机号/邮箱查询用户信息
+     *
      * @param loginId
      * @return
      */
     @GetMapping(value = "/find")
     public Result findEmployee(String loginId) {
+        Employee employee = mapper.findOneByLoginId(loginId);
+        if (null != employee) return Result.getSuccessResult(employee);
+        return Result.getFailResult("未查询到相关用户信息");
+    }
+
+    /**
+     * 根据注册手机号/邮箱查询用户信息
+     *
+     * @param openId
+     * @return
+     */
+    @GetMapping(value = "/wechat")
+    public Result findWeChatEmployee(String openId) {
+        Employee employee = mapper.findOneByWechat(openId);
+        if (null == employee) {
+            return Result.getFailResult("微信尚未绑定！");
+        }
+        return Result.getSuccessResult(employee);
+    }
+
+    /**
+     * 根据注册手机号/邮箱查询用户信息
+     *
+     * @param loginId
+     * @return
+     */
+    @GetMapping(value = "/find/company")
+    public Result findCompanyEmployee(String loginId) {
         try {
             return Result.getSuccessResult(mapper.findOneByLoginId(loginId));
+        } catch (Exception ex) {
+            return Result.getFailResult(ex.getMessage());
+        }
+    }
+
+    /**
+     * 根据注册手机号/邮箱查询用户信息
+     *
+     * @param loginId
+     * @return
+     */
+    @GetMapping(value = "/find/customer")
+    public Result findCustomerEmployee(String loginId) {
+        try {
+            return Result.getSuccessResult(mapper.findCustomerEmployeeLoginId(loginId));
+        } catch (Exception ex) {
+            return Result.getFailResult(ex.getMessage());
+        }
+    }
+
+    /**
+     * 根据注册手机号/邮箱查询用户信息
+     *
+     * @param loginId
+     * @return
+     */
+    @GetMapping(value = "/find/agent")
+    public Result findAgentEmployee(String loginId) {
+        try {
+            return Result.getSuccessResult(mapper.findAgentEmployeeLoginId(loginId));
+        } catch (Exception ex) {
+            return Result.getFailResult(ex.getMessage());
+        }
+    }
+
+    /**
+     * 根据注册手机号/邮箱查询用户信息
+     *
+     * @param loginId
+     * @return
+     */
+    @GetMapping(value = "/find/enduser")
+    public Result findEndUserEmployee(String loginId) {
+        try {
+            return Result.getSuccessResult(mapper.findEndUserEmployeeLoginId(loginId));
         } catch (Exception ex) {
             return Result.getFailResult(ex.getMessage());
         }
@@ -80,6 +149,7 @@ public class EmployeeController {
     /**
      * 修改用户信息
      * 说明：核心管理平台专用接口
+     *
      * @param employee
      * @return
      */
@@ -92,10 +162,30 @@ public class EmployeeController {
             return Result.getFailResult(ex.getMessage());
         }
     }
+    /**
+     * 绑定微信
+     * 说明：微信专用接口
+     *
+     * @param loginId
+     * @param openId
+     * @return
+     */
+    @PostMapping(value = "/wechat/bind")
+    public Result bindWechat(String loginId, String openId) {
+        try {
+            mapper.bindWechat(loginId, openId);
+            return Result.getSuccessResult();
+        } catch (Exception ex) {
+            return Result.getFailResult(ex.getMessage());
+        }
+    }
+
+
 
     /**
      * 修改用户状态
      * 说明：核心管理平台专用接口
+     *
      * @param loginId
      * @param status
      * @return
@@ -113,6 +203,7 @@ public class EmployeeController {
     /**
      * 修改基本信息
      * 说明：微信或平台用户修改基本信息的接口
+     *
      * @param loginId
      * @param mobile
      * @param email
@@ -120,9 +211,9 @@ public class EmployeeController {
      * @return
      */
     @PostMapping(value = "/change/infos")
-    public Result changeEmployeeInfos(String loginId,String mobile, String email, String qq,String realName) {
+    public Result changeEmployeeInfos(String loginId, String mobile, String email, String qq, String realName) {
         try {
-            mapper.changeEmployeeInfos(loginId, mobile,email,qq,realName);
+            mapper.changeEmployeeInfos(loginId, mobile, email, qq, realName);
             return Result.getSuccessResult();
         } catch (Exception ex) {
             return Result.getFailResult(ex.getMessage());
@@ -131,11 +222,12 @@ public class EmployeeController {
 
     /**
      * 修改密码
+     *
      * @param loginId
      * @param password
      * @return
      */
-    @PostMapping(value = "/change/password")
+    @PostMapping(value = "/change/password2")
     public Result changeEmployeePassword(String loginId, String password) {
         try {
             mapper.changeEmployeePassword(loginId, password);
@@ -145,4 +237,13 @@ public class EmployeeController {
         }
     }
 
+    @PostMapping(value = "/change/password")
+    public Result changePassword(Integer id, String password) {
+        try {
+            mapper.changePassword(id, password);
+            return Result.getSuccessResult();
+        } catch (Exception ex) {
+            return Result.getFailResult(ex.getMessage());
+        }
+    }
 }

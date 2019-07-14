@@ -1,7 +1,15 @@
 spring:
   datasource:
     datacore:
-      jdbc-url: jdbc:mysql://192.168.0.110:3306/SdcSoft_Core_DB?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&&useSSL=false
+      jdbc-url: jdbc:mysql://172.17.201.251:3306/SdcSoft_Core_DB?serverTimezone=Asia/Shanghai&useUnicode=true&characterEncoding=utf-8&&useSSL=false&useAffectedRows=true
       driver-class-name: com.mysql.cj.jdbc.Driver
-      username: tomcat
-      password: 80201288@qq.com
+      username: dba_user
+      password: Test@163.com
+eureka:
+  client:
+    service-url:
+      defaultZone: http://172.17.30.183:8761/eureka
+    fetch-registry: false
+  instance:
+    prefer-ip-address: true
+    ip-address: 172.17.30.183

@@ -22,7 +22,7 @@ public class OrgTypeController {
      * @return
      */
     @GetMapping("/list")
-    public Result getList() {
+    public Result getAll() {
         try {
             return Result.getSuccessResult(orgTypeMapper.getDeviceTypeList());
         } catch (Exception ex) {

@@ -1,5 +1,6 @@
 package cn.com.sdcsoft.lanapi.datacore.controller;
 
+import cn.com.sdcsoft.lanapi.datacore.entity.db.EndUser;
 import  cn.com.sdcsoft.lanapi.datacore.entity.web.Result;
 import  cn.com.sdcsoft.lanapi.datacore.mapper.EndUserMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -26,6 +27,19 @@ public class EndUserController {
     public Result getAll() {
         try {
             return Result.getSuccessResult(mapper.findAll());
+        } catch (Exception ex) {
+            return Result.getFailResult(ex.getMessage());
+        }
+    }
+
+    @GetMapping(value = "/find")
+    public Result getEndUserById(int id) {
+        try {
+            EndUser endUser = mapper.findOneById(id);
+            if(null == endUser){
+                return Result.getFailResult("不存在该组织！");
+            }
+            return Result.getSuccessResult(endUser);
         } catch (Exception ex) {
             return Result.getFailResult(ex.getMessage());
         }

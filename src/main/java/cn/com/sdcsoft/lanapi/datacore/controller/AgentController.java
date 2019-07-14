@@ -1,5 +1,6 @@
 package cn.com.sdcsoft.lanapi.datacore.controller;
 
+import cn.com.sdcsoft.lanapi.datacore.entity.db.Agent;
 import  cn.com.sdcsoft.lanapi.datacore.entity.web.Result;
 import  cn.com.sdcsoft.lanapi.datacore.mapper.AgentMapper;
 import org.springframework.beans.factory.annotation.Autowired;
@@ -28,6 +29,19 @@ public class AgentController {
     public Result getAll() {
         try {
             return Result.getSuccessResult(mapper.findAll());
+        } catch (Exception ex) {
+            return Result.getFailResult(ex.getMessage());
+        }
+    }
+
+    @GetMapping(value = "/find")
+    public Result getAgentById(int id) {
+        try {
+            Agent agent = mapper.findOneById(id);
+            if(null == agent){
+                return Result.getFailResult("不存在该组织！");
+            }
+            return Result.getSuccessResult(agent);
         } catch (Exception ex) {
             return Result.getFailResult(ex.getMessage());
         }
