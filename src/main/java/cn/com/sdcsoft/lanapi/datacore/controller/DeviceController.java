@@ -38,7 +38,7 @@ public class DeviceController {
      * @param enterpriseId
      * @return
      */
-    @GetMapping(value = "/find/enterprise")
+    @GetMapping(value = "/list/enterprise")
     public Result getEnterprise(int enterpriseId) {
         try {
             return Result.getSuccessResult(mapper.findDeviceByEnterpriseId(enterpriseId));
@@ -53,7 +53,7 @@ public class DeviceController {
      * @param customerId
      * @return
      */
-    @GetMapping(value = "/find/customer")
+    @GetMapping(value = "/list/customer")
     public Result getCustomer(int customerId) {
         try {
             return Result.getSuccessResult(mapper.findDeviceByCustomerId(customerId));
@@ -72,7 +72,11 @@ public class DeviceController {
     @GetMapping(value = "/get/deviceno")
     public Result findByNo(@RequestParam("deviceNo") String deviceNo) {
         try {
-            return Result.getSuccessResult(mapper.findByDeviceNo(deviceNo));
+            Device device = mapper.findByDeviceNo(deviceNo);
+            if(null == device){
+                return Result.getFailResult("未查询到设备信息！");
+            }
+            return Result.getSuccessResult(device);
         } catch (Exception ex) {
             return Result.getFailResult(ex.getMessage());
         }
@@ -105,7 +109,10 @@ public class DeviceController {
     @GetMapping(value = "/fix/suffix")
     public Result findBySuffixForEuser(String suffix) {
         try {
-            return Result.getSuccessResult(mapper.findBySuffixForEnterpriseUser(suffix));
+            Device device =mapper.findBySuffixForEnterpriseUser(suffix);
+            if(null == device)
+                return Result.getFailResult("未查询到设备信息！");
+            return Result.getSuccessResult(device);
         } catch (Exception ex) {
             return Result.getFailResult(ex.getMessage());
         }

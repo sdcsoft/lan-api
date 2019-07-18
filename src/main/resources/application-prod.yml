@@ -13,3 +13,5 @@ eureka:
   instance:
     prefer-ip-address: true
     ip-address: 172.17.30.183
+server:
+  port: 9000

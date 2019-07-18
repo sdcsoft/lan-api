@@ -13,7 +13,7 @@ import java.util.List;
 public interface OrgTypeMapper {
 
     @Select("select * from OrgType ")
-    List<OrgType> getDeviceTypeList();
+    List<OrgType> getTypeList();
 
     @Update("update OrgType set OrgTypeName=#{orgTypeName} where OrgType=#{orgType}")
     void modifyOrgType(@Param("orgType") int orgType, @Param("orgTypeName") String orgTypeName);

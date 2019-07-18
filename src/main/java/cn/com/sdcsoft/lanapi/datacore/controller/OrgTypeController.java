@@ -24,7 +24,7 @@ public class OrgTypeController {
     @GetMapping("/list")
     public Result getAll() {
         try {
-            return Result.getSuccessResult(orgTypeMapper.getDeviceTypeList());
+            return Result.getSuccessResult(orgTypeMapper.getTypeList());
         } catch (Exception ex) {
             return Result.getFailResult(ex.getMessage());
         }

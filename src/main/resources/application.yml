@@ -2,6 +2,4 @@ spring:
   application:
     name: lan-api
   profiles:
-    active: prod
-server:
-  port: 9000
+    active: dev

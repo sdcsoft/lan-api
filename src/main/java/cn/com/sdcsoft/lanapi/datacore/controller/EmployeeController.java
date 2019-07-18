@@ -227,7 +227,7 @@ public class EmployeeController {
      * @param password
      * @return
      */
-    @PostMapping(value = "/change/password2")
+    @PostMapping(value = "/change/user/password")
     public Result changeEmployeePassword(String loginId, String password) {
         try {
             mapper.changeEmployeePassword(loginId, password);
