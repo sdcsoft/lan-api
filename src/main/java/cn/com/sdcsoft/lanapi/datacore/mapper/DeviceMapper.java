@@ -67,14 +67,16 @@ public interface DeviceMapper {
             "<set>" +
             "<if test='saleStatus>0'>Status=1,SaleDatetime=Now(),</if>" +
             "<if test='1>saleStatus'>Status=0,SaleDatetime=NULL,</if>" +
-            "<if test='1==1'>DeviceType=#{deviceType},DevicePrefix=#{devicePrefix}</if>" +
+            "<if test='1==1'>DeviceType=#{deviceType},DevicePrefix=#{devicePrefix},Power=#{power},Media=#{media}</if>" +
             "</set>" +
             "where DeviceSuffix=#{deviceSuffix}</script>")
     void modifyDeviceForEnterpriseUser(
             @Param("deviceSuffix") String deviceSuffix,
             @Param("devicePrefix") int devicePrefix,
             @Param("deviceType") String deviceType,
-            @Param("saleStatus") int saleStatus);
+            @Param("saleStatus") int saleStatus,
+            @Param("power") int power,
+            @Param("media") int media);
 
     @Insert("<script>insert into Device (EnterpriseId,DeviceNo,DeviceSuffix,DeviceType,SubType,ImportDatetime) values "
             + "<foreach collection =\"deviceList\" item=\"device\" index=\"index\" separator =\",\"> "

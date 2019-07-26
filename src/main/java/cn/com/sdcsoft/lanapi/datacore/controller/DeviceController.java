@@ -129,9 +129,9 @@ public class DeviceController {
      * @return
      */
     @PostMapping(value = "/fix/modify")
-    public Result modifyDevice(String suffix, int prefix, String deviceType, int saleStatus) {
+    public Result modifyDevice(String suffix, int prefix, String deviceType, int saleStatus,int power,int media) {
         try {
-            mapper.modifyDeviceForEnterpriseUser(suffix, prefix, deviceType, saleStatus);
+            mapper.modifyDeviceForEnterpriseUser(suffix, prefix, deviceType, saleStatus,power,media);
             return Result.getSuccessResult();
         } catch (Exception ex) {
             return Result.getFailResult(ex.getMessage());
