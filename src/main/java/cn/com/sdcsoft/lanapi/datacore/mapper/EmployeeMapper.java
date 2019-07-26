@@ -40,6 +40,9 @@ public interface EmployeeMapper {
     @Update("update Employee set OrgType=#{orgType},OrgId=#{orgId},Password=#{password},Mobile=#{mobile},Email=#{email},WeiXin=#{weiXin},QQ=#{qQ},RealName=#{realName},Status=#{status},LastLoginDatetime=#{lastLoginDatetime},Mark=#{mark} where Id = #{id}")
     void modifyEmployee(Employee Employee);
 
+    @Update("update Employee set OrgType=#{orgType},OrgId=#{orgId} where Id = #{employeeId}")
+    void modifyEmployeeOrg(@Param("employeeId") Integer employeeId, @Param("orgType") int orgType, @Param("orgId") int orgId);
+
     @Update("update Employee set Mobile=#{mobile},Email=#{email},RealName=#{realName},QQ=#{qq} where Mobile=#{loginId} or Email=#{loginId}")
     void changeEmployeeInfos(@Param("loginId") String loginId, @Param("mobile") String mobile, @Param("email") String email, @Param("qq") String qq, @Param("realName") String realName);
 

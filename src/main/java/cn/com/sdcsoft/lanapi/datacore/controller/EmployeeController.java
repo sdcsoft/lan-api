@@ -162,6 +162,25 @@ public class EmployeeController {
             return Result.getFailResult(ex.getMessage());
         }
     }
+
+    /**
+     * 修改用户组织信息
+     * 说明：核心管理平台专用接口
+     * @param employeeId
+     * @param orgType
+     * @param orgId
+     * @return
+     */
+    @PostMapping(value = "/modify/org")
+    public Result modifyEmployeeOrg(@RequestParam Integer employeeId,@RequestParam int orgType,@RequestParam int orgId) {
+        try {
+            mapper.modifyEmployeeOrg(employeeId,orgType,orgId);
+            return Result.getSuccessResult();
+        } catch (Exception ex) {
+            return Result.getFailResult(ex.getMessage());
+        }
+    }
+
     /**
      * 绑定微信
      * 说明：微信专用接口
