@@ -19,6 +19,11 @@ public interface DeviceMapper {
     @Select("select * from Device where CustomerId=#{customerId} and Status = 1")
     List<Device> findDeviceByCustomerId(@Param("customerId") int customerId);
 
+    //根据前5为编号获取设备列表
+    @Select("select * from Device where DeviceSuffix LIKE CONCAT(#{deviceSuffix5},'%')")
+    @ResultType(Device.class)
+    List<Device> findBySuffix5(@Param("deviceSuffix5") String deviceSuffix5);
+
     @Select("select * from Device where Status=#{status}")
     @ResultType(Device.class)
     List<Device> findAllByStatus(@Param("status") int status);

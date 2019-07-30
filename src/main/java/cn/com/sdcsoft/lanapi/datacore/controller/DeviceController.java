@@ -62,6 +62,16 @@ public class DeviceController {
         }
     }
 
+    @GetMapping(value = "/list/suffix5")
+    public Result getSuffix5(String suffix5) {
+        try {
+            return Result.getSuccessResult(mapper.findBySuffix5(suffix5));
+        } catch (Exception ex) {
+            return Result.getFailResult(ex.getMessage());
+        }
+    }
+
+
     /**
      * 根据deviceNo获取可用设备，设备状态非可用时，deviceNo有效也无法拿到数据
      * 专为手机APP/微信小程序提供的添加设备用的查询接口
