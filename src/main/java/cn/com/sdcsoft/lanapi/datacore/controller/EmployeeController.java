@@ -102,6 +102,21 @@ public class EmployeeController {
      * @param loginId
      * @return
      */
+    @GetMapping(value = "/find/enterprise")
+    public Result findEnterpriseEmployee(String loginId) {
+        try {
+            return Result.getSuccessResult(mapper.findEnterpriseEmployeeLoginId(loginId));
+        } catch (Exception ex) {
+            return Result.getFailResult(ex.getMessage());
+        }
+    }
+
+    /**
+     * 根据注册手机号/邮箱查询用户信息
+     *
+     * @param loginId
+     * @return
+     */
     @GetMapping(value = "/find/customer")
     public Result findCustomerEmployee(String loginId) {
         try {

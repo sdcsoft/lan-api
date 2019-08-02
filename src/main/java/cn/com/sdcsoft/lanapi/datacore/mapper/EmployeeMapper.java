@@ -28,6 +28,10 @@ public interface EmployeeMapper {
     @Select("select e.* FROM Employee where OrgType = 0 and mobile=#{loginId} or email=#{loginId} ")
     Employee findCompanyEmployeeByLoginId(@Param("loginId") String loginId);
 
+    @Select("select e.*, c.EnterpriseName as OrgName,c.Status as OrgStatus FROM Employee AS e INNER JOIN Enterprise c ON e.OrgType = 1 AND e.OrgId = c.Id   where mobile=#{loginId} or email=#{loginId} ")
+    Employee findEnterpriseEmployeeLoginId(@Param("loginId") String loginId);
+
+
     @Select("select e.*, c.CustomerName as OrgName,c.Status as OrgStatus FROM Employee AS e INNER JOIN Customer c ON e.OrgType = 2 AND e.OrgId = c.Id  where mobile=#{loginId} or email=#{loginId} ")
     Employee findCustomerEmployeeLoginId(@Param("loginId") String loginId);
 
