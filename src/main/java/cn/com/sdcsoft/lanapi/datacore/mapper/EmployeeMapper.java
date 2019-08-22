@@ -22,6 +22,9 @@ public interface EmployeeMapper {
     @Select("select * FROM Employee where WeiXin=#{openId}")
     Employee findOneByWechat(@Param("openId") String openId);
 
+    @Select("select * FROM Employee where UnionId=#{unionId}")
+    Employee findOneByUnionId(@Param("unionId") String unionId);
+
     @Select("select * FROM Employee where mobile=#{loginId} or email=#{loginId} ")
     Employee findOneByLoginId(@Param("loginId") String loginId);
 
@@ -53,8 +56,20 @@ public interface EmployeeMapper {
     @Update("update Employee set Password=#{password} where Mobile=#{loginId} or Email=#{loginId}")
     void changeEmployeePassword(@Param("loginId") String loginId, @Param("password") String password);
 
-    @Update("update Employee set WeiXin=#{openId} where Mobile=#{loginId} or Email=#{loginId}")
-    void bindWechat(@Param("loginId") String loginId, @Param("openId") String openId);
+    //@Update("update Employee set WeiXin=#{openId} where Mobile=#{loginId} or Email=#{loginId}")
+    @Update("<script>" +
+            "update Employee " +
+            "<set>" +
+            "<if test='openId!=null'>" +
+            "OpenId=#{openId}" +
+            "</if>" +
+            "<if test='unionId!=null'>" +
+            "UnionId=#{unionId}" +
+            "</if>" +
+            "</set>" +
+            "<where>Mobile=#{loginId} or Email=#{loginId}</where>" +
+            "</script>")
+    void bindWechat(@Param("loginId") String loginId, @Param("openId") String openId, @Param("unionId") String unionId);
 
     @Update("update Employee set Password=#{password} where Id=#{id}")
     void changePassword(@Param("id") Integer id, @Param("password") String password);

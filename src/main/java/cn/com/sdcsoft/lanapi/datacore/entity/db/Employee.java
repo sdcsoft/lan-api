@@ -13,7 +13,23 @@ public class Employee implements Serializable {
     public static final int STATUS_DISABLE = 0;
 
     private int id, orgType, orgId, status;
-    private String password, mobile, email, weiXin, qQ, realName, mark;
+    private String password;
+    private String mobile;
+    private String email;
+    private String weiXin;
+
+    public String getUnionId() {
+        return unionId;
+    }
+
+    public void setUnionId(String unionId) {
+        this.unionId = unionId;
+    }
+
+    private String unionId;
+    private String qQ;
+    private String realName;
+    private String mark;
     @DateTimeFormat(pattern = "yyyy-MM-dd hh:mm:ss")
     private Date lastLoginDatetime;
 

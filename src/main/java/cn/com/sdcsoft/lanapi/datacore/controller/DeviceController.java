@@ -222,7 +222,7 @@ public class DeviceController {
         }
         Integer id = device.getEndUserId();
         if (null == id || 0 == id) {
-            mapper.modifyCustomerId(suffix, endUserId);
+            mapper.modifyEndUserId(suffix, endUserId);
             return Result.getSuccessResult();
         }
         return Result.getFailResult("当前编号已被使用，请联系经销商处理！");

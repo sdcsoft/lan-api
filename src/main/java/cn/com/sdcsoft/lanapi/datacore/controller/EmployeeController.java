@@ -81,6 +81,15 @@ public class EmployeeController {
         return Result.getSuccessResult(employee);
     }
 
+    @GetMapping(value = "/wechat2")
+    public Result findWeChatEmployee2(String unionId) {
+        Employee employee = mapper.findOneByUnionId(unionId);
+        if (null == employee) {
+            return Result.getFailResult("微信尚未绑定！");
+        }
+        return Result.getSuccessResult(employee);
+    }
+
     /**
      * 根据注册手机号/邮箱查询用户信息
      *
@@ -205,9 +214,9 @@ public class EmployeeController {
      * @return
      */
     @PostMapping(value = "/wechat/bind")
-    public Result bindWechat(String loginId, String openId) {
+    public Result bindWechat(String loginId, String openId,String unionId) {
         try {
-            mapper.bindWechat(loginId, openId);
+            mapper.bindWechat(loginId, openId,unionId);
             return Result.getSuccessResult();
         } catch (Exception ex) {
             return Result.getFailResult(ex.getMessage());

@@ -61,7 +61,7 @@ public interface DeviceMapper {
     void modifyAgentId(@Param("deviceSuffix") String deviceSuffix, @Param("agentId") Integer agentId);
 
     @Update("update Device set EndUserId=#{endUserId} where DeviceSuffix=#{deviceSuffix} and ISNULL(EndUserId)")
-    void modifyEndUserId(@Param("deviceSuffix") String deviceSuffix, @Param("EndUserId") Integer endUserId);
+    void modifyEndUserId(@Param("deviceSuffix") String deviceSuffix, @Param("endUserId") Integer endUserId);
 
     @Select("select * from Device where DeviceSuffix=#{deviceSuffix}")
     @ResultType(Device.class)
