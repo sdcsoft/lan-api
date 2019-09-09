@@ -61,13 +61,13 @@ public interface EmployeeMapper {
             "update Employee " +
             "<set>" +
             "<if test='openId!=null'>" +
-            "OpenId=#{openId}" +
+            "WeiXin=#{openId} " +
             "</if>" +
             "<if test='unionId!=null'>" +
-            "UnionId=#{unionId}" +
+            ",UnionId=#{unionId} " +
             "</if>" +
             "</set>" +
-            "<where>Mobile=#{loginId} or Email=#{loginId}</where>" +
+            "<where>Mobile=#{loginId} or Email=#{loginId} </where>" +
             "</script>")
     void bindWechat(@Param("loginId") String loginId, @Param("openId") String openId, @Param("unionId") String unionId);
 
@@ -81,7 +81,7 @@ public interface EmployeeMapper {
     @Update("update Employee set OrgType=5,OrgId=0 where Mobile=#{loginId} or Email=#{loginId}")
     void freeEmployee(@Param("loginId") String loginId);
 
-    @Insert("insert into Employee (OrgType,OrgId,Password,Mobile,Email,QQ,WeiXin,RealName,Status,LastLoginDatetime,Mark) values (#{orgType},#{orgId},#{password},#{mobile},#{email},#{qQ},#{weiXin},#{realName},#{status},#{lastLoginDatetime},#{mark})")
+    @Insert("insert into Employee (OrgType,OrgId,Password,Mobile,Email,QQ,WeiXin,RealName,Status,LastLoginDatetime,Mark,UnionId) values (#{orgType},#{orgId},#{password},#{mobile},#{email},#{qQ},#{weiXin},#{realName},#{status},#{lastLoginDatetime},#{mark},#{unionId})")
     @Options(useGeneratedKeys = true, keyProperty = "id")
     void addEmployee(Employee Employee);
 

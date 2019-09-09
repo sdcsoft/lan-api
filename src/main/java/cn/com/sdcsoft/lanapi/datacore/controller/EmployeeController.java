@@ -72,7 +72,7 @@ public class EmployeeController {
      * @param openId
      * @return
      */
-    @GetMapping(value = "/wechat")
+    @PostMapping(value = "/wechat")
     public Result findWeChatEmployee(String openId) {
         Employee employee = mapper.findOneByWechat(openId);
         if (null == employee) {
@@ -81,7 +81,7 @@ public class EmployeeController {
         return Result.getSuccessResult(employee);
     }
 
-    @GetMapping(value = "/wechat2")
+    @PostMapping(value = "/wechat2")
     public Result findWeChatEmployee2(String unionId) {
         Employee employee = mapper.findOneByUnionId(unionId);
         if (null == employee) {

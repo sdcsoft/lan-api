@@ -56,6 +56,16 @@ public class Device implements Serializable {
 
     private int media;
     private String deviceNo;
+
+    public String getiMEI() {
+        return iMEI;
+    }
+
+    public void setiMEI(String iMEI) {
+        this.iMEI = iMEI;
+    }
+
+    private String iMEI;
     /**
      * 设备前10位编码
      */
